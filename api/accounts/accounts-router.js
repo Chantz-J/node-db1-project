@@ -14,12 +14,18 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', mw.checkAccountId, async (req, res) => {
   // DO YOUR MAGIC
-  res.status(200).json(req.accounts)
+  res.status(200).json(req.accounts)//Middle ware attaches returned object (an account), to request object's account value. No need for getById/
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', mw.checkAccountPayload, async (req, res, next) => {
   // DO YOUR MAGIC
-})
+  try {
+    const newAccount = await Account.create(req.body)
+    res.status(201).json(newAccount)
+  } catch (err) {
+    next(err)
+  }
+}) 
 
 router.put('/:id', (req, res, next) => {
   // DO YOUR MAGIC
