@@ -12,8 +12,9 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', mw.checkAccountId, async (req, res) => {
   // DO YOUR MAGIC
+  res.status(200).json(req.accounts)
 })
 
 router.post('/', (req, res, next) => {
