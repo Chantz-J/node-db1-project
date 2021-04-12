@@ -17,8 +17,10 @@ const getById = id => {
   return getById(id)
 }
 
-const updateById = (id, account) => {
+async function updateById(id, {name, budget}){
   // DO YOUR MAGIC
+  await db('accounts').where("id", id).update({name, budget})
+  return getById(id)
 }
 
 const deleteById = id => {
